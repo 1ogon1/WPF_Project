@@ -1,0 +1,16 @@
+D:\Diplom\Project\Project\bin\Debug\Project.exe.config
+D:\Diplom\Project\Project\bin\Debug\Project.exe
+D:\Diplom\Project\Project\bin\Debug\Project.pdb
+D:\Diplom\Project\Project\obj\Debug\Project.csprojAssemblyReference.cache
+D:\Diplom\Project\Project\obj\Debug\MainWindow.g.cs
+D:\Diplom\Project\Project\obj\Debug\App.g.cs
+D:\Diplom\Project\Project\obj\Debug\Project_MarkupCompile.cache
+D:\Diplom\Project\Project\obj\Debug\Project_MarkupCompile.lref
+D:\Diplom\Project\Project\obj\Debug\MainWindow.baml
+D:\Diplom\Project\Project\obj\Debug\Project.g.resources
+D:\Diplom\Project\Project\obj\Debug\Project.Properties.Resources.resources
+D:\Diplom\Project\Project\obj\Debug\Project.csproj.GenerateResource.cache
+D:\Diplom\Project\Project\obj\Debug\Project.csproj.CoreCompileInputs.cache
+D:\Diplom\Project\Project\obj\Debug\Project.exe
+D:\Diplom\Project\Project\obj\Debug\Project.pdb
+D:\Diplom\Project\Project\obj\Debug\GeneratedInternalTypeHelper.g.cs
