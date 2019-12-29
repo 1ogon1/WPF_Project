@@ -1,0 +1,272 @@
+﻿<Window x:Class="Project.WorkPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Проектування макету шкіргалантерейних виробів" 
+        Height="740"
+        Width="1200"
+        Loaded="OnLoad"
+        Name="MyWindow"
+        >
+    <Window.Resources>
+
+        <Storyboard x:Key="sbShowRightMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-150,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideRightMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,-150,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+        <Storyboard x:Key="sbShowFiguresPanel" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-150,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideFiguresPanel">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,-150,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+    </Window.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+        <Grid Margin="0,0,0,0">
+
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_Загальне">
+                        <MenuItem Header="_Відкрити (Ctrl+O)" Click="OpenFile">
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/open-folder.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Очистити (Ctrl+D)" Click="ClearCanvas" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/Clear-icon.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Зберегти як... (Ctrl+S)" Click="SaveToFile" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/save-icon.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Додати фігуру (Ctrl+A)" Click="AddFigure" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/add.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="_Вихід (Ctrl+E)" Click="Exit" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/sign-out.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Вставка">
+                        <MenuItem Header="_Прямокутник (Ctrl+R)" Click="Rectangle" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/rectangle.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Трапеція (Ctrl+T)" Click="Trapeze"  >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/trapeze.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Довільна фігура">
+                            <MenuItem Header="_Прямокутник (Ctrl+Shift+R)" Click="SetRectanglePoints" >
+                                <MenuItem.Icon>
+                                    <Image Source="Media/Images/rectangle-dotted.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Трапеція (Ctrl+Shift+T)" Click="SetTrapezePoints"   >
+                                <MenuItem.Icon>
+                                    <Image Source="Media/Images/trapeze-dotted.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Вигляд">
+                        <MenuItem Header="_Збыльшити (Ctrl+'+')" Click="ZoomIncrease">
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/zoom-in.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Змешити (Ctrl+'-')" Click="ZoomDecrease" >
+                            <MenuItem.Icon>
+                                <Image Source="Media/Images/zoom-out.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+                <TextBox AcceptsReturn="True" />
+            </DockPanel>
+
+            <Canvas MouseMove="OnMouseMove" MouseLeftButtonDown="SetPiont" x:Name="MyCanvas" Background="AliceBlue" ClipToBounds="True" Margin="0,15,0,0" />
+
+            <TextBlock x:Name="ZoomBox" Margin="1116,681,5.4,5.4" TextAlignment="Right" />
+
+            <TextBlock x:Name="MousePosition" Margin="5.4,665,1126.6,5.4" />
+
+            <!--<StackPanel Panel.ZIndex="2" Name="pnlLeftMenu" Orientation="Horizontal" Height="400" HorizontalAlignment="Left" Margin="-150,0,0,0">
+                <Border BorderBrush="#AF1719" BorderThickness="1" Width="150" Background="#4C808080" >
+
+                </Border>
+                <Grid>
+                    <Button Name="btnLeftMenuHide" Width="48" Height="48" Click="btnLeftMenuHide_Click" Content="Hide" Visibility="Hidden"/>
+                    <Button Name="btnLeftMenuShow" Width="48" Height="48" Click="btnLeftMenuShow_Click" Content="Show"/>
+                </Grid>
+            </StackPanel>-->
+
+            <StackPanel Panel.ZIndex="2" Name="RightMenu" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,-150,0">
+                <Grid>
+                    <Button Name="RightMenuShow" HorizontalAlignment="Right" Click="RightMenuShowHandle" Margin="0,0,0.8,609.4" Width="16">
+                        <Button.Content>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Width="80" Text="Налаштування">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="RightMenuHide" HorizontalAlignment="Right" Click="RightMenuHideHandle" Margin="0,0,0.8,609.4" Width="16" Visibility="Hidden">
+                        <Button.Content>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Width="80" Text="Налаштування">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+
+                <Border Width="150" Background="#fff" Padding="10">
+                    <StackPanel x:Name="RightMenuContent" Visibility="Visible">
+                        <Grid Margin="0, 0, 0, 20">
+                            <StackPanel x:Name="Parameters"/>
+                        </Grid>
+                        <Grid Margin="0, 0, 0, 20">
+                            <StackPanel>
+                                <TextBlock Text="Заокруглення сторін" Margin="0,0,10.4,-0.4" />
+                                <Border BorderBrush="#ccc" BorderThickness="1" Margin="0, 0, 0, 5">
+                                    <StackPanel>
+                                        <Grid>
+                                            <TextBlock Text=" Верхня ст." Margin="0, 0, 64.4, 0" />
+                                            <TextBox x:Name="TopRadius" CaretIndex="0" TextChanged="ChangeRadiusTop" Margin="71, 0, -0.6, 0" />
+                                        </Grid>
+                                        <Grid>
+                                            <TextBlock Text=" Нижня ст." Margin="0, 0, 64.4, 0" />
+                                            <TextBox x:Name="BottomRadius" CaretIndex="0" TextChanged="ChangeRadiusBottom" Margin="71, 0, -0.6, 0" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                                <Border BorderBrush="#ccc" BorderThickness="1">
+                                    <StackPanel>
+                                        <Grid>
+                                            <TextBlock Text=" Ліва ст." Margin="0, 0, 64.4, 0" />
+                                            <TextBox x:Name="LeftRadius" CaretIndex="0" TextChanged="ChangeRadiusLeft" Margin="71, 0, -0.6, 0" />
+                                        </Grid>
+                                        <Grid>
+                                            <TextBlock Text=" Права ст." Margin="0, 0, 64.4, 0" />
+                                            <TextBox x:Name="RightRadius" CaretIndex="0" TextChanged="ChangeRadiusRight" Margin="71, 0, -0.6, 0" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel x:Name="Coordinates">
+                                <TextBlock Text="Верхня сторона" Margin="0,0,10.4,-0.4" />
+                                <Grid>
+                                    <TextBlock Text=" X0:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Top_X0" CaretIndex="0" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y0:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Top_Y0" CaretIndex="0" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock Text=" X1:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Top_X1" CaretIndex="0" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y1:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Top_Y1" CaretIndex="0" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <TextBlock Text="Права сторона" Margin="0, 10,10.4,-0.4" />
+                                <Grid>
+                                    <TextBlock Text=" X0:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Right_X0" CaretIndex="1" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y0:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Right_Y0" CaretIndex="1" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock Text=" X1:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Right_X1" CaretIndex="1" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y1:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Right_Y1" CaretIndex="1" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <TextBlock Text="Нижня сторона" Margin="0,10,10.4,-0.4" />
+                                <Grid>
+                                    <TextBlock Text=" X0:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Bottom_X0" CaretIndex="2" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y0:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Bottom_Y0" CaretIndex="2" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock Text=" X1:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Bottom_X1" CaretIndex="2" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y1:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Bottom_Y1" CaretIndex="2" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <TextBlock Text="Ліва сторона" Margin="0,10,10.4,-0.4" />
+                                <Grid>
+                                    <TextBlock Text=" X0:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Left_X0" CaretIndex="3" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y0:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Left_Y0" CaretIndex="3" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock Text=" X1:" Margin="0,0,110,0" />
+                                    <TextBox x:Name="Left_X1" CaretIndex="3" TextChanged="ChangeCoordinates" Margin="20,0,65,0" />
+                                    <TextBlock Text=" Y1:" Margin="65,0,45,0" />
+                                    <TextBox x:Name="Left_Y1" CaretIndex="3" TextChanged="ChangeCoordinates" Margin="85,0,0,0" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Panel.ZIndex="1" x:Name="FiguresPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,-150,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="121*"/>
+                        <RowDefinition Height="590*"/>
+                    </Grid.RowDefinitions>
+                    <Button Name="FiguresPanelShow" HorizontalAlignment="Right" Click="FiguresPanelShowHandle" Margin="0,106,0.8,523.4" Width="16" Grid.RowSpan="2">
+                        <Button.Content>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Width="80" Text="Список фігур">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="FiguresPanelHide" HorizontalAlignment="Right" Click="FiguresPanelHideHandle" Margin="0,106,0.8,523.4" Width="16" Grid.RowSpan="2" Visibility="Hidden">
+                        <Button.Content>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Width="80" Text="Список фігур">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+
+                <Border Width="150" Background="#fff" Padding="10">
+                    <StackPanel x:Name="FiguresPanelContent" Visibility="Visible">
+                        <TextBlock Text="Саисок фігур" Margin="0,0,10.4,-0.4" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

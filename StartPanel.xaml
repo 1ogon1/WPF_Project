@@ -1,0 +1,40 @@
+﻿<Window x:Class="Project.StartPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project"
+        mc:Ignorable="d"
+        Title="Головна сторінка" 
+        Height="500" 
+        Width="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="125"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="5,5,411.6,5.2" FontSize="16" Text="Головна сторінка" TextAlignment="Center" />
+        <TextBlock Grid.Row="1" Margin="5,4.8,411.6,5.4" TextAlignment="Center" FontSize="16" Text='Дипломна роботана тему "Розробка математичного та програмного забезпечення для автоматизованого проектування галантерейних виробів"' TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="3" Margin="495,9.8,4.6,4.2" TextAlignment="Left"  FontSize="16" TextWrapping="Wrap" >
+            Виконав
+            <LineBreak/>
+            студент групи МгЗІТ-18
+            <LineBreak/>
+            Коноваленко Р.О.
+            <LineBreak/>
+            керівник
+            <LineBreak/>
+            к.т.н. ас. Чупринка Н.В.
+        </TextBlock>
+
+        <Button Grid.Row="3" FontSize="16" Content="Відкрити файл..." Margin="0,0,44.6,10.2" Width="120" Height="24" Click="OpenFile" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="OpenFileButton"/>
+        <Button Grid.Row="4" FontSize="16" Content="Новий проект" Margin="0,0,44.6,10.4" Width="120" Height="24" Click="NewProject" VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="NewProjectButton"/>
+    </Grid>
+</Window>
